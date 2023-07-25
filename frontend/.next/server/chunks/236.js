@@ -65,25 +65,22 @@ const DatabaseConsumer = Database.Consumer;
 /***/ }),
 
 /***/ 8027:
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "W": () => (/* binding */ socket)
 /* harmony export */ });
-/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4612);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([socket_io_client__WEBPACK_IMPORTED_MODULE_0__]);
-socket_io_client__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8087);
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_0__);
 
 // "undefined" means the URL will be computed from the `window.location` object
 // const URL = process.env.NODE_ENV === 'production' ? undefined : '143.248.99.244:5796';
-const URL =  true ? undefined : 0;
+// const URL = process.env.NODE_ENV === 'production' ? undefined : process.env.COMM_SERVER;
+const URL = "http://192.168.50.173:5796";
 // console.log(process.env.COMM_SERVER)
 const socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__.io)(URL); // export const socket = io(process.env.COMM_SERVER);
  // export const socket = io('http://192.168.50.173:5796');
 
-__webpack_async_result__();
-} catch(e) { __webpack_async_result__(e); } });
 
 /***/ })
 

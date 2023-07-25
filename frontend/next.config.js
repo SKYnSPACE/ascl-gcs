@@ -9,7 +9,6 @@ const nextConfig = {
   images: {
     domains: ['143.248.99.244'],
   },
-  experimental: { esmExternals: false }, //To handle [Cannot find package 'socket.io-client'] error.
 }
 
 module.exports = nextConfig
