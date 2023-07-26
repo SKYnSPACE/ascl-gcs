@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "socket-comm"
+version = "0.1.0"
+description = ""
+authors = ["SKYnSPACE <skynspace@kaist.ac.kr>"]
+readme = "README.md"
+packages = [{include = "socket_comm"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pyserial = "^3.5"
+python-socketio = "^5.8.0"
+uvicorn = "^0.22.0"
+pymavlink = "^2.4.39"
+websockets = "^11.0.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

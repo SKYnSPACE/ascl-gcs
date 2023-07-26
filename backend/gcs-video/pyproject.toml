@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "gcs-video"
+version = "0.1.0"
+description = ""
+authors = ["SKYnSPACE <skynspace@kaist.ac.kr>"]
+readme = "README.md"
+packages = [{include = "gcs_video"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+flask = "^2.3.2"
+opencv-python = "^4.8.0.74"
+imutils = "^0.5.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
