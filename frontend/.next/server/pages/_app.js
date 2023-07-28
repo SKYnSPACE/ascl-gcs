@@ -4,29 +4,45 @@ exports.id = 888;
 exports.ids = [888];
 exports.modules = {
 
-/***/ 1925:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ 1430:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-// ESM COMPAT FLAG
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ private_next_pages_app_js__WEBPACK_IMPORTED_MODULE_0__.Z)
+/* harmony export */ });
+/* harmony import */ var private_next_pages_app_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8375);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([private_next_pages_app_js__WEBPACK_IMPORTED_MODULE_0__]);
+private_next_pages_app_js__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "default": () => (/* reexport */ App)
-});
+        // Next.js Route Loader
+        
+        
+    
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
-// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(5893);
-// EXTERNAL MODULE: ./src/styles/globals.css
-var globals = __webpack_require__(108);
-// EXTERNAL MODULE: external "react"
-var external_react_ = __webpack_require__(6689);
-// EXTERNAL MODULE: ./src/components/Database.jsx
-var Database = __webpack_require__(39);
-// EXTERNAL MODULE: ./src/components/socket.js
-var socket = __webpack_require__(8027);
-;// CONCATENATED MODULE: ./src/pages/_app.js
+/***/ }),
+
+/***/ 8375:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (/* binding */ App)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5893);
+/* harmony import */ var _styles_globals_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(108);
+/* harmony import */ var _styles_globals_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_styles_globals_css__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _components_Database__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(39);
+/* harmony import */ var _components_socket__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8027);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_socket__WEBPACK_IMPORTED_MODULE_4__]);
+_components_socket__WEBPACK_IMPORTED_MODULE_4__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 // import dynamic from "next/dynamic";
 
 
@@ -34,12 +50,12 @@ var socket = __webpack_require__(8027);
 
 
 function App({ Component , pageProps  }) {
-    (0,external_react_.useEffect)(()=>{
-        socket/* socket.on */.W.on("connect", ()=>{
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
+        _components_socket__WEBPACK_IMPORTED_MODULE_4__/* .socket.on */ .W.on("connect", ()=>{
             console.log("connected to socket.io server");
-            socket/* socket.emit */.W.emit("SEND_ALL");
+            _components_socket__WEBPACK_IMPORTED_MODULE_4__/* .socket.emit */ .W.emit("SEND_ALL");
         });
-        socket/* socket.on */.W.on("disconnect", ()=>{
+        _components_socket__WEBPACK_IMPORTED_MODULE_4__/* .socket.on */ .W.on("disconnect", ()=>{
             console.log("disconnected from socket.io server");
         });
         // Wrap your event handler with _.throttle. The second argument is the wait time in milliseconds.
@@ -66,8 +82,8 @@ function App({ Component , pageProps  }) {
         // // console.log(globalData?.flightStates?.roll)
         // });
         return ()=>{
-            socket/* socket.off */.W.off("connect");
-            socket/* socket.off */.W.off("disconnect");
+            _components_socket__WEBPACK_IMPORTED_MODULE_4__/* .socket.off */ .W.off("connect");
+            _components_socket__WEBPACK_IMPORTED_MODULE_4__/* .socket.off */ .W.off("disconnect");
         // socket.off('message');
         // cancelAnimationFrame(animationFrameId);
         };
@@ -89,8 +105,8 @@ function App({ Component , pageProps  }) {
     //     socket.off('message');
     //   }
     // })
-    return /*#__PURE__*/ jsx_runtime.jsx(Database/* DatabaseProvider */.xz, {
-        children: /*#__PURE__*/ jsx_runtime.jsx(Component, {
+    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_Database__WEBPACK_IMPORTED_MODULE_3__/* .DatabaseProvider */ .xz, {
+        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(Component, {
             ...pageProps
         })
     });
@@ -101,12 +117,8 @@ function App({ Component , pageProps  }) {
  //   ssr: false,
  // });
 
-;// CONCATENATED MODULE: ./node_modules/next/dist/build/webpack/loaders/next-route-loader.js?page=%2F_app&absolutePagePath=private-next-pages%2F_app.js&preferredRegion=!
-
-        // Next.js Route Loader
-        
-        
-    
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -141,11 +153,11 @@ module.exports = require("react");
 
 /***/ }),
 
-/***/ 8087:
+/***/ 4612:
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("socket.io-client");
+module.exports = import("socket.io-client");;
 
 /***/ })
 
@@ -156,7 +168,7 @@ module.exports = require("socket.io-client");
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [893,236], () => (__webpack_exec__(1925)));
+var __webpack_exports__ = __webpack_require__.X(0, [893,236], () => (__webpack_exec__(1430)));
 module.exports = __webpack_exports__;
 
 })();
