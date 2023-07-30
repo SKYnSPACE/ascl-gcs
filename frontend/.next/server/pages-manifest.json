@@ -1,14 +1,14 @@
 {
-  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
+  "/_app": "pages/_app.js",
   "/api/hello": "pages/api/hello.js",
-  "/api/proxy": "pages/api/proxy.js",
   "/api/proxyDem": "pages/api/proxyDem.js",
+  "/api/proxy": "pages/api/proxy.js",
   "/api/proxySat": "pages/api/proxySat.js",
   "/": "pages/index.html",
   "/map": "pages/map.html",
   "/map2": "pages/map2.html",
   "/mission": "pages/mission.html",
-  "/_error": "pages/_error.js",
   "/404": "pages/404.html"
 }
