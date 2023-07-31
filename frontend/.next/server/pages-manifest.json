@@ -1,10 +1,11 @@
 {
-  "/_error": "pages/_error.js",
-  "/api/hello": "pages/api/hello.js",
   "/_document": "pages/_document.js",
   "/api/proxy": "pages/api/proxy.js",
+  "/api/proxyAbs": "pages/api/proxyAbs.js",
   "/api/proxyDem": "pages/api/proxyDem.js",
   "/api/proxySat": "pages/api/proxySat.js",
+  "/api/hello": "pages/api/hello.js",
+  "/_error": "pages/_error.js",
   "/_app": "pages/_app.js",
   "/": "pages/index.html",
   "/map2": "pages/map2.html",
