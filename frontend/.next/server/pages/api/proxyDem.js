@@ -30,7 +30,7 @@ async function handler(req, res) {
     const { z , x , y  } = req.query;
     // Send a request to the other server
     // const response = await fetch(`http://143.248.72.184:8080/tile/${z}/${x}/${y}.png`);
-    const response = await (0,node_fetch__WEBPACK_IMPORTED_MODULE_0__["default"])(`http://143.248.72.184:3722/tile/dem/${z}/${x}/${y}.png`);
+    const response = await (0,node_fetch__WEBPACK_IMPORTED_MODULE_0__["default"])(`http://127.0.0.1:3722/tile/dem/${z}/${x}/${y}.png`);
     // Check if the request was successful
     if (!response.ok) {
         // Forward the status code and status text from the response
