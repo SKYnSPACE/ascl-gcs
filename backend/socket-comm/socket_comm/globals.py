@@ -11,6 +11,7 @@ def initialize(COM_FCC, COM_gimbal, BAUD_FCC, BAUD_gimbal):
     global cmdIntReady; global cmdLongReady; 
     global is_updated
 
+
     mavSerial_FCC = serialCom.MavSerialConnection(COM_FCC, BAUD_FCC)
     mavSerial_gimbal = serialCom.MavSerialConnection(COM_gimbal, BAUD_gimbal)
     msgSet = messageSet.MessageSet()
@@ -25,4 +26,5 @@ def initialize(COM_FCC, COM_gimbal, BAUD_FCC, BAUD_gimbal):
     # global videoRouter
     # ipAddress = '192.168.0.4'; port = '554'; username = 'asclrtsp'; password = '0423503722'
     # videoRouter = video_router.VideoRouter(ipAddress, port, username, password)
-    
+
+

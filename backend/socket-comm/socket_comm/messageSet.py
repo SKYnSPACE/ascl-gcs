@@ -42,7 +42,16 @@ class MessageSet():
     self.msgHILState = None
     self.msgDistanceSensor = None
     self.msgMissionItemInt = None
-    self.msgCameraCaptureStatus = None
+    # self.msgCameraCaptureStatus = None
+    self.msgCameraCaptureStatus = {
+      'time_boot_ms': 0,
+      'image_status': 0,
+      'video_status': 0,
+      'image_interval': 0,
+      'recording_time_ms': 0,
+      'available_capacity': 0,
+      'image_count': 0
+    }
 
 class IsUpdated():
   def __init__(self):
