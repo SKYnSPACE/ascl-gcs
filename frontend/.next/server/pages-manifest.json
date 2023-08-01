@@ -1,15 +1,15 @@
 {
-  "/_app": "pages/_app.js",
-  "/_document": "pages/_document.js",
   "/api/proxy": "pages/api/proxy.js",
+  "/_document": "pages/_document.js",
   "/api/hello": "pages/api/hello.js",
+  "/api/proxyAbs": "pages/api/proxyAbs.js",
   "/api/proxySat": "pages/api/proxySat.js",
   "/api/proxyDem": "pages/api/proxyDem.js",
-  "/api/proxyAbs": "pages/api/proxyAbs.js",
-  "/": "pages/index.html",
-  "/map2": "pages/map2.html",
-  "/map": "pages/map.html",
-  "/mission": "pages/mission.html",
+  "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
+  "/mission": "pages/mission.html",
+  "/map2": "pages/map2.html",
+  "/": "pages/index.html",
+  "/map": "pages/map.html",
   "/404": "pages/404.html"
 }
