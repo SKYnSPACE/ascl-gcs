@@ -7,9 +7,9 @@
   "/api/proxyAbs": "pages/api/proxyAbs.js",
   "/api/proxyDem": "pages/api/proxyDem.js",
   "/api/proxySat": "pages/api/proxySat.js",
-  "/": "pages/index.html",
-  "/map2": "pages/map2.html",
   "/map": "pages/map.html",
+  "/": "pages/index.html",
   "/mission": "pages/mission.html",
+  "/map2": "pages/map2.html",
   "/404": "pages/404.html"
 }
