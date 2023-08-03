@@ -18,7 +18,7 @@ logger.setLevel(logging.WARNING)
 
 class SocketIOServer(threading.Thread):
     # def __init__(self, server_addr='0.0.0.0', port=9309, async_mode='asgi') -> None:
-    def __init__(self, server_addr='192.168.50.173', port=5796, async_mode='asgi') -> None:
+    def __init__(self, server_addr='127.0.0.1', port=5796, async_mode='asgi') -> None:
         # Initialize Thread 
         threading.Thread.__init__(self)
         self.daemon = True
@@ -26,7 +26,7 @@ class SocketIOServer(threading.Thread):
         self.telemetry_missing = 0
         
         # Create a Socket.IO server
-        self.sio = socketio.AsyncServer(logger=True, async_mode=async_mode, cors_allowed_origins="*")
+        self.sio = socketio.AsyncServer(logger=False, async_mode=async_mode, cors_allowed_origins="*")
 
         # Wrap with ASGI application
         self.app = socketio.ASGIApp(self.sio)
@@ -36,8 +36,8 @@ class SocketIOServer(threading.Thread):
 
         # map events and methods
         
-        self.sio.on('COMMAND_INT', handler = self.ReceiveCommandInt)
-        self.sio.on('COMMAND_LONG', handler = self.ReceiveCommandLong)
+        self.sio.on('COMMAND_INT', handler = self.onReceiveCommandInt)
+        self.sio.on('COMMAND_LONG', handler = self.onReceiveCommandLong)
         self.sio.on('ATTITUDE_QUATERNION', handler = self.SendAttitudeQuat)
         self.sio.on('HEARTBEAT', handler = self.SendHeartbeat)
         self.sio.on('GPS_RAW_INT', handler = self.SendGpsRawInt)
@@ -48,7 +48,7 @@ class SocketIOServer(threading.Thread):
         self.sio.on('DISTANCE_SENSOR', handler = self.SendDistanceSensor)
         self.sio.on('MISSION_ITEM_INT', handler = self.SendMissionItemInt)
         self.sio.on('CAMERA_CAPTURE_STATUS', handler = self.SendCameraCaptureStatus)
-        # self.sio.on('SEND_ALL', handler = self.SendAll)
+        self.sio.on('SEND_ALL', handler = self.SendAll)
         self.sio.on('disconnect', handler = self.StopAll)
         self.sio.on('requestBreak', handler = self.StopAll)
 
@@ -72,7 +72,7 @@ class SocketIOServer(threading.Thread):
         async def check_update_again(): # while loop 가 데이터 업데이트 전에 한 번 더 도는 순간 탈출하는 현상을 방지
             update_flag = False
             self.telemetry_missing += 1
-            for _ in range(6001): #timeout = 1 minute
+            for _ in range(60001): #timeout = 1 minute
                 await asyncio.sleep(0.01)
                 for attr in dir(globals.is_updated):
                     if not attr.startswith('__'):
@@ -140,10 +140,6 @@ class SocketIOServer(threading.Thread):
                 update_status_task = asyncio.create_task(check_update_again())
                 await update_status_task
                 update_status = update_status_task.result()
-                # if(not update_status):
-                #     update_status_task = asyncio.create_task(check_update_again())
-                #     await update_status_task
-                #     update_status = update_status_task.result()
                 if(not update_status):
                     logging.debug('Breaking Loop.')
                     globals.sendAll = False
@@ -163,86 +159,132 @@ class SocketIOServer(threading.Thread):
 
     ## Telecommands
 
+    def offset_gimbal_state(self, gimbal_cmd: dict, gimbal_state: dict) -> None:
+        gimbal_cmd['param1'] -= gimbal_state['image_interval'] # yaw
+        gimbal_cmd['param2'] -= gimbal_state['available_capacity'] # pitch
+        return gimbal_cmd
+
+
     def parse_message_cmd_long(self, msg: dict):
         for key in msg:
             if key in globals.msgSet.CommandFloat:
                 globals.msgSet.CommandFloat[key] = copy.deepcopy(msg[key])
+                if globals.msgSet.CommandFloat[key] == 2004:
+                    globals.msgSet.CommandFloat =  self.offset_gimbal_state(globals.msgSet.CommandFloat, json.loads(globals.msgSet.msgCameraCaptureStatus.to_json()))
+                # globals.msgSet.CommandFloat['command'] = 2005
 
     def parse_message_cmd_int(self, msg: dict):
         for key in msg:
             if key in globals.msgSet.CommandInt:
                 globals.msgSet.CommandInt[key] = copy.deepcopy(msg[key])    
+
+    def zero_command_int(self, msg_int: dict):
+        msg_int = {
+            'target_system': 0,
+            'target_component': 0,
+            'frame': 0,
+            'command': 0,
+            'current': 0,
+            'autocontinue': 0,
+            'param1': 0,
+            'param2': 0,
+            'param3': 0,
+            'param4': 0,
+            'x': 0,
+            'y': 0,
+            'z': 0
+        }
+
+    def zero_command_long(self, msg_long: dict):
+        msg_long = {
+            'target_system': 0,
+            'target_component': 0,
+            'frame': 0,
+            'command': 0,
+            'current': 0,
+            'autocontinue': 0,
+            'param1': 0,
+            'param2': 0,
+            'param3': 0,
+            'param4': 0,
+            'x': 0,
+            'y': 0,
+            'z': 0
+        }
     
-    def ReceiveCommandInt(self,sid, msg):
+    def onReceiveCommandInt(self, sid, msg):
         
-        print(msg)
+        # print(msg)
+        logger.warning(msg)
         self.parse_message_cmd_int(msg)
         globals.cmdIntReady = True
-        print(globals.msgSet.CommandInt)
-        globals.mavSerial_FCC.send_message()
+        # print(globals.msgSet.CommandInt)
+        # globals.mavSerial_FCC.send_message()
         globals.mavSerial_gimbal.send_message()
+        self.zero_command_int(globals.msgSet.CommandInt)
         globals.cmdIntReady = False ## CHECK serialCom.py
+
     
+    def onReceiveCommandLong(self, sid, msg):
 
-    def ReceiveCommandLong(self,sid, msg):
-
-        print(msg)
-        self.parse_message_cmd_long(msg)
+        # print(msg)
+        self.parse_message_cmd_long(msg)    
         globals.cmdLongReady = True
-        print(globals.msgSet.CommandFloat)
-        globals.mavSerial_FCC.send_message()
+        # print(globals.msgSet.CommandFloat)
+        # globals.mavSerial_FCC.send_message()
         globals.mavSerial_gimbal.send_message()
+        self.zero_command_long(globals.msgSet.CommandFloat)
         globals.cmdLongReady = False ## CHECK serialCom.pys
 
     ## Telemetries
 
-    async def SendAttitude(self,sid):
+    async def SendAttitude(self, sid):
         if(globals.msgSet.attitudeMsg != None):
             await self.sio.send(globals.msgSet.attitudeMsg.to_json())
             globals.msgSet.attitudeMsg = None
     
 
-    async def SendAttitudeQuat(self,sid):
+    async def SendAttitudeQuat(self, sid):
         if(globals.msgSet.attitudeQuatMsg != None):
             await self.sio.send(globals.msgSet.attitudeQuatMsg.to_json())
     
-    async def SendHeartbeat(self,sid):
+    async def SendHeartbeat(self, sid):
         if(globals.msgSet.heartbeatMsg != None):
             await self.sio.send(globals.msgSet.heartbeatMsg.to_json())
 
-    async def SendGpsRawInt(self,sid):
+    async def SendGpsRawInt(self, sid):
         if(globals.msgSet.msgGpsRawInt != None):
             await self.sio.send(globals.msgSet.msgGpsRawInt.to_json())
 
-    async def SendGlobalPosInt(self,sid):
+    async def SendGlobalPosInt(self, sid):
         if(globals.msgSet.msgGlobalPosInt != None):
             await self.sio.send(globals.msgSet.msgGlobalPosInt.to_json())
 
-    async def SendLocalPosNED(self,sid):
+    async def SendLocalPosNED(self, sid):
         if(globals.msgSet.msgLocalPosNED != None):
             await self.sio.send(globals.msgSet.msgLocalPosNED.to_json())
 
-    async def SendScaledImu(self,sid):
+    async def SendScaledImu(self, sid):
         if(globals.msgSet.msgScaledImu != None):
             await self.sio.send(globals.msgSet.msgScaledImu.to_json())
     
-    async def SendHILState(self,sid):
+    async def SendHILState(self, sid):
         if(globals.msgSet.msgHILState != None):
             await self.sio.emit('HIL_STATE', globals.msgSet.msgHILState.to_json())
 
-    async def SendDistanceSensor(self,sid):
+    async def SendDistanceSensor(self, sid):
         if(globals.msgSet.msgDistanceSensor != None):
             await self.sio.emit('DISTANCE_SENSOR', globals.msgSet.msgDistanceSensor.to_json())
 
-    async def SendMissionItemInt(self,sid):
+    async def SendMissionItemInt(self, sid):
         if(globals.msgSet.msgMissionItemInt != None):
             await self.sio.emit('MISSION_ITEM_INT', globals.msgSet.msgMissionItemInt.to_json())
 
-    async def SendCameraCaptureStatus(self,sid):
+    async def SendCameraCaptureStatus(self, sid):
         if(globals.msgSet.msgCameraCaptureStatus != None):
             await self.sio.emit('CAMERA_CAPTURE_STATUS', globals.msgSet.msgCameraCaptureStatus.to_json())
     
-    async def TestMsgHandler(self,sid):
+    async def TestMsgHandler(self, sid):
         print()
     
         

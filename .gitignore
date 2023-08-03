@@ -1,0 +1,5 @@
+# backend/*
+backend/socket-comm/socket_comm/logs
+backend/tile-server/tile_server/data
+# **/backend/data
+testrun.sh
