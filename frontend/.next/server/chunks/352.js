@@ -320,13 +320,13 @@ function handleMessage(data, TelemetryData) {
             TelemetryData.CAMERA_TRACKING_IMAGE_STATUS.rec_bottom_y = data.rec_bottom_y;
             break;
         case "CAMERA_CAPTURE_STATUS":
-            TelemetryData.CAMERA_CAPTURE_STATUS.time_boot_ms = data.time_boot_ms;
-            TelemetryData.CAMERA_CAPTURE_STATUS.image_status = data.image_status;
-            TelemetryData.CAMERA_CAPTURE_STATUS.video_status = data.video_status;
-            TelemetryData.CAMERA_CAPTURE_STATUS.image_interval = data.image_interval;
-            TelemetryData.CAMERA_CAPTURE_STATUS.recording_time_ms = data.recording_time_ms;
-            TelemetryData.CAMERA_CAPTURE_STATUS.available_capacity = data.available_capacity;
-            TelemetryData.CAMERA_CAPTURE_STATUS.image_count = data.image_count;
+            TelemetryData.CAMERA_CAPTURE_STATUS.time_boot_ms = data.time_boot_ms; //[1]Lat
+            TelemetryData.CAMERA_CAPTURE_STATUS.image_status = data.image_status; //[2]
+            TelemetryData.CAMERA_CAPTURE_STATUS.video_status = data.video_status; //[3]
+            TelemetryData.CAMERA_CAPTURE_STATUS.image_interval = data.image_interval; //[4]
+            TelemetryData.CAMERA_CAPTURE_STATUS.recording_time_ms = data.recording_time_ms; //[5]Lon
+            TelemetryData.CAMERA_CAPTURE_STATUS.available_capacity = data.available_capacity; //
+            TelemetryData.CAMERA_CAPTURE_STATUS.image_count = data.image_count; //[7]AltMSL
             break;
         default:
     }
